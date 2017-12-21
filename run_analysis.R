@@ -2,7 +2,7 @@
 
 # if(!file.exists("./data")){dir.create("./data")}
 # fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-# download the file under Windows10.
+# # download the file under Windows10.
 # download.file(fileUrl,destfile="./data/Dataset.zip")
 # 
 # unzip(zipfile="./data/Dataset.zip",exdir="./data")
@@ -42,11 +42,11 @@ dat<-subset(dat,select=selectedNames)
 #3.Uses descriptive activity names to name the activities in the data set
 dtActLabels <- read.table(file.path(path, "activity_labels.txt"),header = FALSE)
 dat$activity <- dtActLabels[dat$activity,2]
-#head(dat$activity,30)
+#head(dat$activity,50)
 
 #4.Appropriately labels the data set with descriptive variable names
-names(dat)<-gsub("^t", "time", names(dat))
-names(dat)<-gsub("^f", "frequency", names(dat))
+names(dat)<-gsub("^t", "Time", names(dat))
+names(dat)<-gsub("^f", "Frequency", names(dat))
 names(dat)<-gsub("Acc", "Accelerometer", names(dat))
 names(dat)<-gsub("Gyro", "Gyroscope", names(dat))
 names(dat)<-gsub("Mag", "Magnitude", names(dat))
@@ -57,6 +57,10 @@ names(dat)<-gsub("BodyBody", "Body", names(dat))
 ##5.Creates a second,independent tidy data set and ouput it
 
 library(plyr);
-dat2<-aggregate(. ~subject + activity, dat, mean)
-dat2<-dat2[order(dat2$subject,dat2$activity),]
-write.table(dat2, file = "tidydata.txt",row.name=FALSE)
+datTidy<-aggregate(. ~subject + activity, dat, mean)
+datTidy<-datTidy[order(datTidy$subject,datTidy$activity),]
+write.table(datTidy, file = "tidydata.txt",row.name=FALSE)
+
+##6.Make Cood book.
+library(knitr)
+knit2html("codebook.Rmd")

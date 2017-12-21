@@ -1,0 +1,25 @@
+##Codebook
+
+##Variable list
+
+```{r}
+names(datTidy)
+```
+
+##Dataset structure
+
+```{r}
+str(datTidy)
+```
+
+##Head 10
+
+```{r}
+head(datTidy,30)
+```
+
+##Summary of variables
+
+```{r}
+summary(datTidy)
+```
